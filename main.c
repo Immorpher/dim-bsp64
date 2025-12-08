@@ -42,7 +42,7 @@ static void ShowTitle(void)
 {
 
   TextPrintMsg("\n"
-  "[[ dma-bsp64 v0.3 ]]\n"
+  "[[ dim-bsp64 v0.3 ]]\n"
   "Based on d64bsp by MP2E, which in turn is based on...\n"
   "GLBSP by Andrew Apted, which in turn is based on...\n"
   "BSP 2.3. Further credits follow this message.\n\n");
@@ -65,17 +65,17 @@ static void ShowInfo(void)
     "Public License, and comes with ABSOLUTELY NO WARRANTY.  See the\n"
     "accompanying documentation for more details.\n"
     "\n"
-    "Usage: dma-bsp64 [options] input.wad ... [-o output.wad]\n"
-    "Or:    dma-bsp64 @arg_file.rsp\n"
+    "Usage: dim-bsp64 [options] input.wad ... [-o output.wad]\n"
+    "Or:    dim-bsp64 @arg_file.rsp\n"
     "\n"
-    "For a list of the available options, type: dma-bsp64 -help\n"
+    "For a list of the available options, type: dim-bsp64 -help\n"
   );
 }
 
 static void ShowOptions(void)
 {
   TextPrintMsg(
-    "Usage: dma-bsp64 [options] input.wad ... [-o output.wad]\n"
+    "Usage: dim-bsp64 [options] input.wad ... [-o output.wad]\n"
     "\n"
     "General Options:\n"
     "  -q  -quiet         Quieter output, no level stats\n"
