@@ -193,6 +193,8 @@ static void BlockAdd(int blk_num, int line_index)
 static void BlockAddLine(linedef_t *L)
 {
   if((L->flags & LINEFLAG_HIDE_AUTOMAP) && (L->flags & LINEFLAG_SHOW_AUTOMAP)) return; //dma: if both "show" and "hide" (on automap), then skip this line.
+  
+  if(L->specials[1] & LINEFLAG_NO_BLOCKMAP) return; //immorpher: unused flag to hide line from blockmap
 
   int x1 = (int) L->start->x;
   int y1 = (int) L->start->y;

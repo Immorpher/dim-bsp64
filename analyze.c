@@ -327,9 +327,18 @@ static int SidedefCompare(const void *p1, const void *p2)
 
   sidedef_t *A = lev_sidedefs[side1];
   sidedef_t *B = lev_sidedefs[side2];
+    
+  // immorpher: do not merge sidedefs if explicitly disabled
+  if (A->merge_side == 2 || B->merge_side == 2)
+	  return 1;
 
+  // merge sidedefs if identical
   if (side1 == side2)
-    return 0;
+    return (A->sector->index - B->sector->index);
+
+  // immorpher: force the merger of appropriately flagged and tagged sidedefs
+  if (A->merge_side && B->merge_side && (A->tag == B->tag))
+	  return (A->sector->index - B->sector->index);
 
   // don't merge sidedefs on special lines
   if (A->on_special || B->on_special)

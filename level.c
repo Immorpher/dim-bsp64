@@ -545,12 +545,30 @@ void GetLinedefs(void)
     {
       line->right->ref_count++;
       line->right->on_special |= (line->type > 0) ? 1 : 0;
+	  line->right->tag = line->tag;
+	  // immorpher: do not merge scrollers/switches unless...
+	  if (line->specials[0] & LINEFLAG_SCROLL_LEFT || line->specials[0] & LINEFLAG_SCROLL_RIGHT || line->specials[0] & LINEFLAG_SCROLL_UP || line->specials[0] & LINEFLAG_SCROLL_DOWN || line->flags & LINEFLAG_DISPLAY_UPPER || line->specials[0] & LINEFLAG_DISPLAY_LOWER) {
+		  line->right->merge_side = 2;
+	  }
+	  // immorpher: force the merger of sidedefs if flagged
+	  if (line->specials[1] & LINEFLAG_COMB_SIDEDEF) {
+		  line->right->merge_side = 1;
+	  }
     }
 
     if (line->left)
     {
       line->left->ref_count++;
       line->left->on_special |= (line->type > 0) ? 1 : 0;
+	  line->left->tag = line->tag;
+	  // immorpher: do not merge scrollers/switches unless...
+	  if (line->specials[0] & LINEFLAG_SCROLL_LEFT || line->specials[0] & LINEFLAG_SCROLL_RIGHT || line->specials[0] & LINEFLAG_SCROLL_UP || line->specials[0] & LINEFLAG_SCROLL_DOWN || line->flags & LINEFLAG_DISPLAY_UPPER || line->specials[0] & LINEFLAG_DISPLAY_LOWER) {
+		  line->left->merge_side = 2;
+	  }
+	  // immorpher: force the merger of sidedefs if flagged
+	  if (line->specials[1] & LINEFLAG_COMB_SIDEDEF) {
+		  line->left->merge_side = 1;
+	  }
     }
 
     line->self_ref = (line->left && line->right &&

@@ -163,6 +163,9 @@ typedef struct sidedef_s
   // these sidedefs together, as they might scroll, or change texture
   // when a switch is pressed.
   int on_special;
+  
+  int merge_side; // immorpher: special flag to force the merger of sidedefs of same tag, 0 = indeterminate, 1 = always merge, 2 = never merge
+  int tag; // immorpher: store tag for potential merger of sidedefs
 }
 sidedef_t;
 
