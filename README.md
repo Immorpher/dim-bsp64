@@ -4,6 +4,8 @@ This is a nodebuilder for Doom 64 which has blockmap optimization and sidedef co
 
 ## Installation
 
+Copy "dim-bsp64.cfg" and "dim-bsp64.exe" into the "Compilers\Nodebuilders" folder of your Doom Builder 64 installation. Load up Doom Builder 64 then in the "Tools" menu go to the "Nodebuilder". Here you can change your configurations to "DIM-BSP64". 
+
 ## Usage
 
 Lines can be omitted from the blockmap by using the No Blockmap (0x10000000) flag, OR by combining the "Always show on automap" AND "Never shown on automap" linedef flags. This can allow monsters to fall down and climb up small sectors that they may not normally be able to or it can allow for players to walk through thin sectors.
