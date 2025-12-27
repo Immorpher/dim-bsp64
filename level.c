@@ -74,7 +74,6 @@ LEVELARRAY(thing_t,   lev_things,     num_things)
 static LEVELARRAY(seg_t,     segs,       num_segs)
 static LEVELARRAY(subsec_t,  subsecs,    num_subsecs)
 static LEVELARRAY(node_t,    nodes,      num_nodes)
-static LEVELARRAY(node_t,    stale_nodes,num_stale_nodes)
 static LEVELARRAY(wall_tip_t,wall_tips,  num_wall_tips)
 
 int32_t compressed_links[65536];
@@ -125,9 +124,6 @@ subsec_t *NewSubsec(void)
 node_t *NewNode(void)
   ALLIGATOR(node_t, nodes, num_nodes)
 
-node_t *NewStaleNode(void)
-  ALLIGATOR(node_t, stale_nodes, num_stale_nodes)
-
 wall_tip_t *NewWallTip(void)
   ALLIGATOR(wall_tip_t, wall_tips, num_wall_tips)
 
@@ -169,9 +165,6 @@ void FreeSubsecs(void)
 void FreeNodes(void)
   FREEMASON(node_t, nodes, num_nodes)
 
-void FreeStaleNodes(void)
-  FREEMASON(node_t, stale_nodes, num_stale_nodes)
-
 void FreeWallTips(void)
   FREEMASON(wall_tip_t, wall_tips, num_wall_tips)
 
@@ -209,9 +202,6 @@ subsec_t *LookupSubsec(int index)
   
 node_t *LookupNode(int index)
   LOOKERUPPER(nodes, num_nodes, "node")
-
-node_t *LookupStaleNode(int index)
-  LOOKERUPPER(stale_nodes, num_stale_nodes, "stale_node")
 
 
 /* ----- reading routines ------------------------------ */
@@ -653,65 +643,6 @@ void GetLinedefsHexen(void)
     line->index = i;
   }
 }
-
-//
-// GetStaleNodes
-//
-void GetStaleNodes(void)
-{
-  int i, count=-1;
-  raw_node_t *raw;
-  lump_t *lump = FindLevelLump("NODES");
-
-  if (lump)
-    count = lump->length / sizeof(raw_node_t);
-
-  if (!lump || count < 5)
-    return;
-
-  DisplayTicker();
-
-# if DEBUG_LOAD
-  PrintDebug("GetStaleNodes: num = %d\n", count);
-# endif
-
-  raw = (raw_node_t *) lump->data;
-
-  /* must allocate all the nodes beforehand, since they contain
-   * internal references to each other.
-   */
-  for (i=0; i < count; i++)
-  {
-    NewStaleNode();
-  }
-
-  for (i=0; i < count; i++, raw++)
-  {
-    node_t *nd = LookupStaleNode(i);
-
-    nd->x  = SINT16(raw->x);
-    nd->y  = SINT16(raw->y);
-    nd->dx = SINT16(raw->dx);
-    nd->dy = SINT16(raw->dy);
-
-    nd->index = i;
-    
-    /* Note: we ignore the subsector references */
-     
-    if ((UINT16(raw->right) & 0x8000U) == 0)
-    {
-      nd->r.node = LookupStaleNode(UINT16(raw->right));
-    }
-
-    if ((UINT16(raw->left) & 0x8000U) == 0)
-    {
-      nd->l.node = LookupStaleNode(UINT16(raw->left));
-    }
-
-    /* we also ignore the bounding boxes -- not needed */
-  }
-}
-
 
 static INLINE_G int TransformSegDist(const seg_t *seg)
 {
@@ -1699,13 +1630,6 @@ void LoadLevel(void)
 
   PrintVerbose("Loaded %d vertices, %d sectors, %d sides, %d lines, %d things\n", 
       num_vertices, num_sectors, num_sidedefs, num_linedefs, num_things);
-
-  if (cur_info->fast && !lev_doing_normal &&
-      normal_exists && num_sectors > 5 && num_linedefs > 100)
-  {
-    PrintVerbose("Using original nodes to speed things up\n");
-    GetStaleNodes();
-  }
  
   if (lev_doing_normal)
   {
@@ -1758,7 +1682,6 @@ void FreeLevel(void)
   FreeSegs();
   FreeSubsecs();
   FreeNodes();
-  FreeStaleNodes();
   FreeWallTips();
 }
 
