@@ -22,7 +22,7 @@ Sectors can be removed from the "REJECT" lump with the special 999 (Blind To Mon
 
 ### Compress Edges Mode
 
-In addition to all of the features in the normal mode, the compress edges mode will more aggressively omit lines from the blockmap. Specifically non-special lines that border sectors that are only 32 units high (or lower) and the ceiling gap is 64 units high (or greater) will be omitted. Consequences of this allows enemies to fall down from these ledges and transverse stairs more easily too. The player can approach some of these edges a bit closer than normal too.
+In addition to all of the features in the normal mode, the compress edges mode will more aggressively omit lines from the blockmap. Specifically non-special lines that border sectors that have floors within 32 units high (or lower) and the ceiling gap from the floor is at least 64 units high (or greater) will be omitted. Consequences of this allows enemies to fall down from ledges 32 units high or lower and transverse stairs more easily too. The player can approach some of these edges a bit closer than normal too.
 
 Special lines are lines that contain a special (actions, macros, and switch properties), have a non-zero tag, border sectors with differing tags, or use any flags which specifically block movement (one-sided, block projectiles, block monsters, and ect...). These special lines are excluded from edge compression, thus any of these properties can be added to any line (or a tag to a sector) where you may not want enemies or players being able to approach closely to.
 
