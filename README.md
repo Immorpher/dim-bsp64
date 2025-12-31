@@ -4,7 +4,7 @@ This is a nodebuilder for Doom 64 which has blockmap optimization, sidedef compr
 
 ## Installation
 
-Copy "BSP64Enhanced.cfg" and "BSP64Enhanced.exe" into the "Compilers\Nodebuilders" folder of your Doom Builder 64 installation. Load up Doom Builder 64 then in the "Tools" menu go to the "Nodebuilder". Here you can change your configurations to "BSP64 Enhanced". There will be two options for node building which will be described in the following section.
+BSP64 Enhanced is designed to work with Doom Builder 64 Enhanced (https://github.com/Styd051/Doom-Builder-64-Enhanced/releases/). Copy "BSP64Enhanced.cfg" and "BSP64Enhanced.exe" into the "Compilers\Nodebuilders" folder of your Doom Builder 64 installation. Load up Doom Builder 64 then in the "Tools" menu go to the "Nodebuilder". Here you can change your configurations to "BSP64 Enhanced". There will be two options for node building which will be described in the following section.
 
 ## Usage
 
@@ -22,9 +22,9 @@ Sectors can be removed from the "REJECT" lump with the special 999 (Blind To Mon
 
 ### Compress Edges Mode
 
-In addition to all of the features in the normal mode, the compress edges mode will more aggressively omit lines from the blockmap. Specifically non-special lines that border sectors that have floors within 32 units high (or lower) and the ceiling gap from the floor is at least 64 units high (or greater) will be omitted. Consequences of this allows enemies to fall down from ledges 32 units high or lower and transverse stairs more easily too. The player can approach some of these edges a bit closer than normal too.
+In addition to all of the features in the normal mode, the compress edges mode will more aggressively omit lines from the blockmap. Specifically non-special lines that border sectors that have floors within 16 units high (or lower) and the ceiling gap from the floor is at least 64 units high (or greater) will be omitted. Consequences of this allows enemies to transverse stairs and steps more easily. Also the player can approach some of the lowered ceilings closer than normal too. If either of these are undesireable, the line definitions can be made into special lines.
 
-Special lines are lines that contain a special (actions, macros, and switch properties), have a non-zero tag, border sectors with differing tags, or use any flags which specifically block movement (one-sided, block projectiles, block monsters, and ect...). These special lines are excluded from edge compression, thus any of these properties can be added to any line (or a tag to a sector) where you may not want enemies or players being able to approach closely to.
+Special lines are line definitions that contain a special (actions, macros, and switch properties), have a non-zero tag, border sectors with differing tags, or use any flags which specifically block movement (one-sided, block projectiles, block monsters, and ect...). These special lines are excluded from edge compression, thus any of these properties can be added to any line (or a tag to a sector) where you may not want enemies or players being able to approach closely to.
 
 ### Command-line Commands
 
