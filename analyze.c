@@ -330,7 +330,7 @@ static int SidedefCompare(const void *p1, const void *p2)
   // immorpher: do not merge sidedefs if explicitly disabled
   if (A->merge_side == 2 || B->merge_side == 2)
 	  return 1;
-
+  
   // merge sidedefs if identical
   if (side1 == side2)
     return (A->sector->index - B->sector->index);
